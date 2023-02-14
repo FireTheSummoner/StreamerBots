@@ -10,14 +10,6 @@ class BunnyReady extends Listener {
     }
 
     exec() {
-        /*              Code To Leave Blacklisted Servers
-            for (const [serverID, server] of map) {
-                if (BLServers.includes(serverID)) {
-                    let ServerCache = this.client.guilds.cache.get(`${serverID}`)
-                    ServerCache.leave()
-                }
-            }
-        */
         console.log(`Tap Tap Tap`)
         this.client.user.setActivity("Must. Click. All. Circles.", {
             type: ActivityType.Streaming,
@@ -26,4 +18,4 @@ class BunnyReady extends Listener {
     }
 }
 
-module.exports = BunnyReady;
+module.exports = BunnyReady; 
