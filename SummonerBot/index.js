@@ -1,4 +1,4 @@
-const { AkairoClient, CommandHandler, ListenerHandler } = require('discord-akairo');
+const { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } = require('discord-akairo');
 const { summonerToken } = require('../tokens.json')
 
 class MyClient extends AkairoClient {
