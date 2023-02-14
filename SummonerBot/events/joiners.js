@@ -27,7 +27,7 @@ class SummonerReady extends Listener {
             }
 
             //add 1 to bot file count
-            fs.writeFile( `../../serverBotCount.json`, JSON.stringify(newBotCount), (err) => {
+            fs.writeFile( `./serverBotCount.json`, JSON.stringify(newBotCount), (err) => {
                 if (err) {
                     console.log(err)
                 }
