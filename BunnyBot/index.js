@@ -32,4 +32,4 @@ class Client extends AkairoClient {
     }
 }
 const client = new Client();
-client.login(Token);
+client.login(bunnyToken);
