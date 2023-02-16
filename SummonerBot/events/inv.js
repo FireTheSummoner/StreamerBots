@@ -57,7 +57,7 @@ class SummonerInv extends Listener {
                 */
             }
             else {
-                //smells like something I forgot it can return or an error
+                //smells like something I forgot it can return or an error :)
             }
         }
     }
