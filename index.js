@@ -1,5 +1,26 @@
 const { AkairoClient, CommandHandler, ListenerHandler } = require('discord-akairo');
-const { summonerToken, bunnyToken } = require('./tokens.json');
+const { summonerToken, bunnyToken, summonerClientID, bunnyClientID } = require('./tokens.json');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+const BotCommands = require("./Commands.json");
+
+const summonerRest = new REST({ version: '9' }).setToken(summonerToken);
+
+(async () => {
+	try {
+		console.log('Starting....');
+
+        await summonerRest.put(
+			Routes.applicationGuildCommands(`1016528542223310940`, `1015445131131895808`),
+			{ body: BotCommands.summoner },
+		);
+
+        console.log("Finished")
+	}
+    catch (error) {
+		console.error(error);
+	}
+})();
 
 class SummonerBot extends AkairoClient {
     constructor() {

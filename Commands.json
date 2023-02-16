@@ -1,0 +1,23 @@
+{
+    "summoner": [
+        {
+            "name": "inventory",
+            "description": "open your inventory",
+            "type": 1,
+            "options": [
+                {
+                    "name": "item-type",
+                    "description": "show only a certain type of item",
+                    "type": 3,
+                    "required": false,
+                    "choices": [
+                        {
+                            "name": "hats",
+                            "value": "hat"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
