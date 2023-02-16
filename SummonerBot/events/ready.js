@@ -1,5 +1,6 @@
 const { Listener } = require('discord-akairo');
 const { ActivityType } = require("discord.js");
+const fetch = require('node-fetch')
 
 class SummonerReady extends Listener {
     constructor() {
@@ -9,7 +10,24 @@ class SummonerReady extends Listener {
         })
     }
 
-    exec() {
+    async exec() {
+    /*
+        try {
+            const response = await fetch('https://github.com/');
+            const data = await response.text();
+
+            if (data) {
+                console.log("API WORKS")
+            }
+            else if (!data) {
+                console.log("API WORKS BUT NO DATA")
+            }
+            
+        }
+        catch (err) {
+            console.log(err)
+        }
+    */
         console.log(`You called master?`)
         this.client.user.setActivity("Watching the realms", {
             type: ActivityType.Streaming,
