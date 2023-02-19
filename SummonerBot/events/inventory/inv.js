@@ -1,5 +1,8 @@
 const { Listener } = require('discord-akairo');
+const fs = require("fs")
 const fetch = require('node-fetch');
+
+const userInvMaps = require("../../../items.json")
 
 class SummonerInv extends Listener {
     constructor() {
@@ -55,6 +58,16 @@ class SummonerInv extends Listener {
                         console.log(err)
                     }
                 */
+                let invMap =  new Map(Object.entries(userInvMaps));
+                
+                let userInvetory = invMap.get(`${interaction.user.id}`);
+                
+                userInvetory.items.push({ name: "Energy Can", id: 3, value: 40})
+
+                console.log(invMap)
+                fs.writeFile(`./items.json`, JSON.stringify(Object.fromEntries(invMap), null, 2), function(err) {
+                    if (err) throw err;
+                })
             }
             else {
                 //smells like something I forgot it can return or an error :)

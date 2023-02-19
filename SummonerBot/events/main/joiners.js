@@ -1,5 +1,5 @@
 const { Listener } = require('discord-akairo');
-const { bots } = require("../../serverBotCount.json")
+const { bots } = require("../../../serverBotCount.json")
 const fs = require("fs")
 
 class SummonerJoiners extends Listener {

@@ -20,7 +20,7 @@ class SummonerBot extends AkairoClient {
             automateCategories: true,
         });*/
         this.listenerHandler = new ListenerHandler(this, {
-            directory: './SummonerBot/events/',
+            directory: './SummonerBot/events/main',
         });
         this.listenerHandler.setEmitters({
             //commandHandler: this.commandHandler,
@@ -30,6 +30,16 @@ class SummonerBot extends AkairoClient {
         //this.commandHandler.useListenerHandler(this.listenerHandler);
         //this.commandHandler.loadAll();
         this.listenerHandler.loadAll();
+
+        this.invHander = new ListenerHandler(this, {
+            directory: './SummonerBot/events/inventory',
+        });
+        this.invHander.setEmitters({
+            //commandHandler: this.commandHandler,
+            listenerHandler: this.invHander,
+            process: process,
+        });
+        this.invHander.loadAll();
     }
 }
 
