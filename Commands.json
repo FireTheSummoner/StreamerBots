@@ -12,8 +12,36 @@
                     "required": false,
                     "choices": [
                         {
-                            "name": "hats",
-                            "value": "hat"
+                            "name": "weapons",
+                            "value": "weapons"
+                        },
+                        {
+                            "name": "helmets",
+                            "value": "helmets"
+                        },
+                        {
+                            "name": "armor",
+                            "value": "armor"
+                        },
+                        {
+                            "name": "shields",
+                            "value": "shields"
+                        },
+                        {
+                            "name": "sub_weapons",
+                            "value": "subWeapons"
+                        },
+                        {
+                            "name": "pets",
+                            "value": "pets"
+                        },
+                        {
+                            "name": "colors",
+                            "value": "colors"
+                        },
+                        {
+                            "name": "consumables",
+                            "value": "consumables"
                         }
                     ]
                 }
