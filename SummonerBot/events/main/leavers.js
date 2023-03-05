@@ -1,11 +1,11 @@
 const { Listener } = require('discord-akairo');
-const { bots } = require("../../serverBotCount.json")
+const { bots } = require("../../../serverBotCount.json")
 const fs = require("fs")
 
-class SummonerJoiners extends Listener {
+class SummonerLeavers extends Listener {
     constructor() {
-        super('Joiners', {
-            event: 'guildMemberAdd',
+        super('Leavers', {
+            event: 'guildMemberRemove',
             emitter: "client",
         })
     }
@@ -14,16 +14,16 @@ class SummonerJoiners extends Listener {
         let sendChan = member.guild.channels.cache.get("1015688079551512769");
         if (member.user.bot === true) {
             let newBotCount = {
-                bots: bots + 1
+                bots: bots - 1
             }
 
             const welcomeEmb = {
                 color: 0xFF9900,
-                title: `${member.user.username}#${member.user.discriminator}`,
+                title: `${member.user.username}#${member.user.discriminator} has left`,
                 thumbnail: {
                     url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}?size=4096`
                 },
-                description: `Welcome in <@!${member.user.id}> to the abyss\nYou are the ${bots + 1} bot`
+                description: `<@!${member.user.id}> has left us ;-;\nThere are now ${newBotCount.bots} bots`
             }
 
             //add 1 to bot file count
@@ -32,7 +32,7 @@ class SummonerJoiners extends Listener {
                     console.log(err)
                 }
                 else if (!err) {
-                    console.log("Bot added to server")
+                    console.log("Bot removed from server")
                 }
             })
 
@@ -41,11 +41,11 @@ class SummonerJoiners extends Listener {
         else if (member.user.bot === false) {
             const welcomeEmb = {
                 color: 0xFF9900,
-                title: `${member.user.username}#${member.user.discriminator}`,
+                title: `${member.user.username}#${member.user.discriminator} has left`,
                 thumbnail: {
                     url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}?size=4096`
                 },
-                description: `Welcome in <@!${member.user.id}> to the abyss\nYou are the ${member.guild.memberCount - bots} member`
+                description: `<@!${member.user.id}> has left us ;-;\nThere are now ${member.guild.memberCount - bots} members`
             }
     
             sendChan.send({ embeds: [welcomeEmb] })
@@ -53,4 +53,4 @@ class SummonerJoiners extends Listener {
     }
 }
 
-module.exports = SummonerJoiners;
+module.exports = SummonerLeavers;

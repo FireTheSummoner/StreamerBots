@@ -1,0 +1,30 @@
+{
+    "weapons": [
+        {
+            "name": "Basic Blade",
+            "value": 0,
+            "stats": {
+                "hp": 0,
+                "atk": 10,
+                "def": 2,
+                "speed": -4,
+                "bleed": 1,
+                "concuss": 0,
+                "shock": 0
+            },
+            "boosts": {
+                "res": "none",
+                "skills": "none",
+                "buffs": "none",
+                "abilities": "none"
+            }
+        }
+    ],
+    "helmets": [],
+    "armor": [],
+    "shields": [],
+    "sub_weapons": [],
+    "pets": [],
+    "colors": ["orange"],
+    "consumables": []
+}
