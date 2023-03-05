@@ -2,10 +2,12 @@ const { Listener } = require('discord-akairo');
 const fs = require("fs")
 const fetch = require('node-fetch');
 
-const userInvMaps = require("../../../items.json")
+const userInvMaps = require("../../../../StreamAddons/User_Invs/sample.json")
 
 class SummonerInv extends Listener {
+
     constructor() {
+
         super('SummonerInventory', {
             event: 'interactionCreate',
             emitter: "client",
@@ -13,64 +15,167 @@ class SummonerInv extends Listener {
     }
 
     async exec(interaction) {
-        if (interaction.commandName === "inventory") {
-            console.log(interaction.options._hoistedOptions[0].value)
-            if (!interaction.options._hoistedOptions) { //this is only for if no choice is selected
-                //Call to API to recieve all inventory data
-                /*    SAMPLE
-                    try {
-                        const response = await fetch(`${apiURL}/${token}/inventory/${interaction.user.id}`);
-                        const data = await response.json();
+//                                                                                                                                     ///////////////////////////////////////////////
+        if (interaction.commandName === "inventory") {                                                                                 ///////////////////////////////////////////////
+//                                                                                                                                     /////////                           ///////////
+            let invBagArray = []                                                                                                       /////////                           ///////////
+            let invMap =  new Map(Object.entries(userInvMaps));                                                                        /////////Add equipped check to items///////////
+            let userInvetory = invMap.get(`${interaction.user.id}`);                                                                   /////////                           ///////////
+//                                                                                                                                     /////////                           ///////////
+            function invBagItems(inven) {                                                                                              ///////////////////////////////////////////////                                                               
+                //sorts them based by types and whatnot. Figure how to make it work tomorrow ~ 2/28/2023                               ///////////////////////////////////////////////
+                //I SAID TOMORROW YOU ADDICT ~ Me, to myself after work on same day as above
+                //I did it some of it today anyway ~ me, 2/28/2023
 
-                        if (data) {
-                            interaction.channel.send(`You have ${data.size} items`)
-                        }
-                        else if (!data) {
-                            interaction.channel.send("You have no items ;-;")
+                if (Object.keys(inven).length > 0 && invBagArray.length < 30) {
+
+                    for (const itemName in inven) {
+                        
+                        if (invBagArray.length % 10 === 0) {
+                            invBagArray.push(`\n${inven[itemName].image}`)
                         }
                         else {
-                            //smells like weird error
+                            invBagArray.push(inven[itemName].image)
                         }
                     }
-                    catch (err) {
-                        console.log(err)
-                    }
-                */
+                }
+                return Promise.resolve(100);
             }
-            else if (interaction.options._hoistedOptions[0]) {//this is only for if a choice is selected
-                //Call to API to recieve all inventory data
-                /*    SAMPLE
-                    try {
-                        const response = await fetch(`${apiURL}/${token}/inventory/${interaction.user.id}/${interaction.options._hoistedOptions[0].value}`);
-                        const data = await response.json();
-
-                        if (data) {
-                            interaction.channel.send(`You have ${data.size} ${interaction.options._hoistedOptions[0].value}s`)
-                        }
-                        else if (!data) {
-                            interaction.channel.send("You have no ${interaction.options._hoistedOptions[0].value}s ;-;")
-                        }
-                        else {
-                            //smells like weird error
-                        }
+            function emptyItems() {
+                while (invBagArray.length < 30) {
+                    if (invBagArray.length % 10 === 0 && invBagArray.length !== 0) {
+                        invBagArray.push("\n⬛")
                     }
-                    catch (err) {
-                        console.log(err)
+                    else {
+                        invBagArray.push("⬛")
                     }
-                */
-                let invMap =  new Map(Object.entries(userInvMaps));
-                
-                let userInvetory = invMap.get(`${interaction.user.id}`);
-                
-                userInvetory.items.push({ name: "Energy Can", id: 3, value: 40})
-
-                console.log(invMap)
-                fs.writeFile(`./items.json`, JSON.stringify(Object.fromEntries(invMap), null, 2), function(err) {
-                    if (err) throw err;
-                })
+                }
+                return Promise.resolve(100);
             }
-            else {
-                //smells like something I forgot it can return or an error :)
+            function invColor(inven) {
+                if (Object.keys(inven).length > 0) {
+                    for (const colorName in inven) {
+                        if (inven[colorName].equipped === true) {
+                            return colorName
+                        }
+                    }
+                }
+                else {
+                    return false
+                }    
+            }
+
+            if (!userInvetory) { // check if registered first
+                const replyMsg = await interaction.reply("You have not been registered")
+                setTimeout(() => interaction.deleteReply(), 10000)
+            }
+
+            else if (userInvetory) {
+
+                if (!interaction.options._hoistedOptions[0]) { //this is only for if no choice is selected
+
+                    invBagItems(userInvetory.items.weapons)
+                    .then(invBagItems(userInvetory.items.helmets))
+                    .then(invBagItems(userInvetory.items.armor))
+                    .then(invBagItems(userInvetory.items.shields))
+                    .then(invBagItems(userInvetory.items.subWeapons))
+                    .then(invBagItems(userInvetory.items.pets))
+                    .then(invBagItems(userInvetory.items.consumables))
+                    .then(invBagItems(userInvetory.items.colors))
+                    .then(emptyItems())
+                    
+                    //Weird shit above
+    
+                    const invEmbed = {
+                        title: `${interaction.user.username}'s Inventory`,
+                        color: invColor(userInvetory.items.colors) === false ? 0xFF9900 : invColor(userInvetory.items.colors),
+                        fields: [
+                            {
+                                name: `Stats:`,
+                                value: `**HP**: 0`,
+                                inline: true
+                            },
+                            {
+                                name: "\u200B",
+                                value: `**ATK**: 0`,
+                                inline: true
+                            },
+                            {
+                                name: "\u200B",
+                                value: `\u200b`
+                            },
+                            {
+                                name: "\u200B",
+                                value: `**DEF**: 0`,
+                                inline: true
+                            },
+                            {
+                                name: "\u200B",
+                                value: `**SPD**: 0`,
+                                inline: true
+                            },
+                            {
+                                name: "\u200B",
+                                value: `\u200b`
+                            },
+                            {
+                                name: `Bag:`,
+                                value: `${invBagArray.join(" ")}`
+                            }
+                        ]
+                    }
+        
+                    interaction.reply({ embeds: [invEmbed] })
+                }
+
+                else if (interaction.options._hoistedOptions[0]) {//this is only for if a choice is selected
+
+                    let itemsMap =  new Map(Object.entries(userInvetory.items));
+                    let invItems = itemsMap.get(`${interaction.options._hoistedOptions[0].value}`)
+                    
+                    invBagItems(invItems).then(emptyItems())
+
+                    const invEmbed = {
+                        title: `${interaction.user.username}'s Inventory`,
+                        color: invColor(userInvetory.items.colors) === false ? 0xFF9900 : invColor(userInvetory.items.colors),
+                        fields: [
+                            {
+                                name: `Stats:`,
+                                value: `**HP**: 0`,
+                                inline: true
+                            },
+                            {
+                                name: "\u200B",
+                                value: `**ATK**: 0`,
+                                inline: true
+                            },
+                            {
+                                name: "\u200B",
+                                value: `\u200b`
+                            },
+                            {
+                                name: "\u200B",
+                                value: `**DEF**: 0`,
+                                inline: true
+                            },
+                            {
+                                name: "\u200B",
+                                value: `**SPD**: 0`,
+                                inline: true
+                            },
+                            {
+                                name: "\u200B",
+                                value: `\u200b`
+                            },
+                            {
+                                name: `Bag:`,
+                                value: `${invBagArray.join(" ")}`
+                            }
+                        ]
+                    }
+        
+                    interaction.reply({ embeds: [invEmbed] })
+                }
             }
         }
     }

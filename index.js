@@ -14,6 +14,10 @@ const summonerRest = new REST({ version: '9' }).setToken(summonerToken);
 			Routes.applicationGuildCommands(`1016528542223310940`, `1015445131131895808`),
 			{ body: BotCommands.summoner },
 		);
+        await summonerRest.put(
+			Routes.applicationGuildCommands(`1016528542223310940`, `1014252546119958598`),
+			{ body: BotCommands.summoner },
+		);
 
         console.log("Finished")
 	}
