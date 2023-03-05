@@ -46,6 +46,11 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "tutorial",
+            "description": "Goes through the tutorial so you can start the game",
+            "type": 1
         }
     ]
 }
