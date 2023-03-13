@@ -46,6 +46,11 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "fight",
+            "description": "Lets you fight something",
+            "type": 1
         }
     ]
 }
