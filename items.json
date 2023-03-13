@@ -1,0 +1,29 @@
+{
+  "0": {
+    "name": "Test User",
+    "id": "0",
+    "items": [
+      {
+        "name": "Chicken Hat",
+        "id": 90909,
+        "value": 300
+      }
+    ]
+  },
+  "714973277457743983": {
+    "name": "FireTheSummoner",
+    "id": "714973277457743983",
+    "items": [
+      {
+        "name": "Bunny Ears",
+        "id": 2,
+        "value": 600
+      },
+      {
+        "name": "Energy Can",
+        "id": 3,
+        "value": 40
+      }
+    ]
+  }
+}
